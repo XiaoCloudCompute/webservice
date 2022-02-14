@@ -41,14 +41,14 @@ public class AuthControllerTest {
     @Test
     public void authSuccess() throws Exception {
         User user = new User();
-        user.setUsername("derek@gmail.com");
+        user.setUsername("derektest@gmail.com");
         user.setPassword("123456");
         user.setFirstName("huanlin");
         user.setLastName("xiao");
         userRepository.save(user);
 
         Map<String, String> load = new HashMap<>();
-        load.put("username", "derek@gmail.com");
+        load.put("username", "derektest@gmail.com");
         load.put("password", "123456");
 
         mvc.perform(MockMvcRequestBuilders.post("/authenticated")
