@@ -26,10 +26,14 @@ public class AuthController {
 
     @PostMapping("/authenticated")
     public ResponseEntity<?> authenticateUser(@RequestBody UserRequestBean userRequestBean) {
-        User user = userRepository.findByUsername(userRequestBean.getUsername()).orElseThrow(() -> new UsernameNotFoundException(String.format("User: %s, not found",userRequestBean.getUsername())));
-        String jwt = new JwtUtil().generateAccessToken(user);
-        Map<String, String> res = new HashMap<>();
-        res.put("jwt", jwt);
-        return new ResponseEntity<>(res, HttpStatus.OK);
+        try {
+            User user = userRepository.findByUsername(userRequestBean.getUsername()).orElseThrow(() -> new UsernameNotFoundException(String.format("User: %s, not found",userRequestBean.getUsername())));
+            String jwt = new JwtUtil().generateAccessToken(user);
+            Map<String, String> res = new HashMap<>();
+            res.put("jwt", jwt);
+            return new ResponseEntity<>(res, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("", HttpStatus.UNAUTHORIZED);
+        }
     }
 }
