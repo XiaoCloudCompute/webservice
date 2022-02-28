@@ -1,0 +1,7 @@
+{
+    "aws_region": "us-east-1",
+    "subnet_id": "subnet-0b16b04d9ca15e444",
+    "source_ami": "ami-033b95fb8079dc481",
+    "aws_users": "351248346419",
+    "web_path": "{{env `WEB_PATH`}}"
+}
