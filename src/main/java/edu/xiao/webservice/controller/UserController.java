@@ -62,9 +62,10 @@ public class UserController {
             }
             String username = authentication.getName();
             User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User: %s, not found", username)));
+            user.setUsername(userRequestBean.getUsername());
             user.setFirstName(userRequestBean.getFirst_name());
             user.setLastName(userRequestBean.getLast_name());
-            user.setPassword(userRequestBean.getPassword());
+            user.setPassword(passwordEncoder.encode(userRequestBean.getPassword()));
             userRepository.save(user);
             return new ResponseEntity<>("", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
