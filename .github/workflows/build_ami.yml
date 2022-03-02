@@ -1,0 +1,28 @@
+#Workflow name
+name: CI/CD Pipeline
+on: [push]
+jobs:
+  build_image:
+    name: Build image
+    runs-on: ubuntu-latest
+    needs: [tests, build_jar]
+    steps:
+      #Check-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
+      - uses: actions/checkout@v1
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: Package
+          path: staging
+      - name: Generate AMI
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: build
+          arguments: "-var-file=.github/workflows/vars.json"
+          target: .github/workflows/ami.json
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
+          PACKER_LOG: 1
+          WEB_PATH: staging/web_service.jar
+
