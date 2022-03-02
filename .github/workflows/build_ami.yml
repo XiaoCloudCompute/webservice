@@ -1,10 +1,31 @@
 #Workflow name
-name: CI/CD Pipeline
+name: Build AMI Image
 on: [push]
 jobs:
+  build_jar:
+    name: Build jar file
+    runs-on: ubuntu-latest
+    steps:
+      #Check-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
+      - uses: actions/checkout@v1
+      #Set up JDK 11
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+          cache: maven
+      - name: Build with Maven
+        run: mvn --batch-mode --update-snapshots verify
+      #Build jar file
+      - run: mkdir staging && cp target/*.jar staging
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Package
+          path: staging
   build_image:
     name: Build image
     runs-on: ubuntu-latest
+    needs:  build_jar
     steps:
       #Check-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
       - uses: actions/checkout@v1
