@@ -65,6 +65,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 jwtFilter(),
                 UsernamePasswordAuthenticationFilter.class
         );
+        http.addFilterBefore(
+                basicFilter(),
+                UsernamePasswordAuthenticationFilter.class
+        );
     }
 
     @Override
@@ -75,6 +79,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public JwtFilter jwtFilter() {
         return new JwtFilter();
+    }
+
+    @Bean
+    public BasicFilter basicFilter() {
+        return new BasicFilter();
     }
 
     @Bean
