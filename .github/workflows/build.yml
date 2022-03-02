@@ -1,6 +1,6 @@
 #Workflow name
 name: CI/CD Pipeline
-on: [push, pull_request]
+on: [pull_request]
 jobs:
   #Test's job
   tests:
