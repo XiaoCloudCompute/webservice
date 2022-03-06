@@ -35,7 +35,6 @@
           "sudo echo -e \"[Unit]\\nDescription=web_service\\nAfter=syslog.target\\n[Service]\\nEnvironmentFile=/home/ec2-user/env.env\\nType=simple\\nExecStart=/usr/bin/java -jar /home/ec2-user/web_spring.jar\\n[Install]\\nWantedBy=multi-user.target\" | sudo tee /etc/systemd/system/web_service.service",
           "sudo chmod +x /etc/systemd/system/web_service.service",
           "sudo systemctl daemon-reload",
-          "sudo systemctl start web_service",
           "sudo systemctl enable web_service"
         ]
       }
