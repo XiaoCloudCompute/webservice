@@ -30,12 +30,6 @@
         "inline": [
           "sudo yum update -y",
           "sudo amazon-linux-extras install -y java-openjdk11",
-          "sudo yum install -y mariadb-server",
-          "sudo systemctl start mariadb",
-          "sudo systemctl enable mariadb",
-          "sudo mysql -e \"create user 'springuser'@'localhost' identified by 'huanlin2022'\";",
-          "sudo mysql -e \"grant all on *.* to 'springuser'@'localhost';\";",
-          "sudo mysql -e \"create database db_example;\"",
           "sudo mv /tmp/web_spring.jar /home/ec2-user/web_spring.jar",
           "sudo chmod +x ~/web_spring.jar",
           "sudo echo -e \"[Unit]\\nDescription=web_service\\nAfter=syslog.target\\n[Service]\\nType=simple\\nExecStart=/usr/bin/java -jar /home/ec2-user/web_spring.jar\\n[Install]\\nWantedBy=multi-user.target\" | sudo tee /etc/systemd/system/web_service.service",
