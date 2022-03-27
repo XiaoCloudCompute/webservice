@@ -67,7 +67,7 @@
     </dependencies>
 
     <build>
-        <finalName>web_service</finalName>
+        <finalName>web_spring</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

@@ -1,0 +1,20 @@
+version: 0.0
+os: linux
+
+files:
+  - source: ./staging/web_spring.jar
+    destination: /home/ec2-user/
+
+hooks:
+  BeforeInstall:
+    - location: ./codedeploy/before_install.sh
+      timeout: 180
+      runas: root
+  AfterInstall:
+    - location: ./codedeploy/after_install.sh
+      timeout: 180
+      runas: root
+  ApplicationStart:
+    - location: ./codedeploy/application_start.sh
+      timeout: 180
+      runas: root
