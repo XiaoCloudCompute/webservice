@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/v2")
 public class PictureController {
     private static final Logger LOG = LoggerFactory.getLogger(PictureController.class);
 
