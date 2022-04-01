@@ -26,6 +26,11 @@
         "destination": "/tmp/web_spring.jar"
       },
       {
+        "type": "file",
+        "source": "./codedeploy/amazon-cloudwatch-agent.json",
+        "destination": "/tmp/amazon-cloudwatch-agent.json"
+      },
+      {
         "type": "shell",
         "inline": [
           "sudo yum update -y",
@@ -35,6 +40,9 @@
           "chmod +x ./install",
           "sudo ./install auto",
           "sudo service codedeploy-agent start",
+          "sudo yum install -y amazon-cloudwatch-agent",
+          "sudo mv /tmp/amazon-cloudwatch-agent.json /opt/amazon-cloudwatch-agent.json",
+          "sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c file:/opt/amazon-cloudwatch-agent.json",
           "sudo amazon-linux-extras install -y java-openjdk11",
           "sudo mv /tmp/web_spring.jar /home/ec2-user/web_spring.jar",
           "sudo chmod +x ~/web_spring.jar",
