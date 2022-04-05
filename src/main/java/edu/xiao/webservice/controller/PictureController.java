@@ -1,5 +1,6 @@
 package edu.xiao.webservice.controller;
 
+import com.timgroup.statsd.StatsDClient;
 import edu.xiao.webservice.bean.PictureResponseBean;
 import edu.xiao.webservice.model.Picture;
 import edu.xiao.webservice.model.User;
@@ -22,6 +23,9 @@ public class PictureController {
     private static final Logger LOG = LoggerFactory.getLogger(PictureController.class);
 
     @Autowired
+    private StatsDClient statsDClient;
+
+    @Autowired
     UserRepository userRepository;
 
     @Autowired
@@ -30,9 +34,14 @@ public class PictureController {
     @PostMapping("/user/self/pic")
     public ResponseEntity<?> uploadPicture(@RequestParam("file") MultipartFile file, Authentication authentication) {
         try {
+            long start = System.currentTimeMillis();
+            LOG.info("enter user.self.pic.post");
+            statsDClient.incrementCounter("user.self.pic.post");
             String username = authentication.getName();
             User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User: %s, not found", username)));
             Picture pic = pictureService.upload(file, user);
+            long end = System.currentTimeMillis();
+            statsDClient.recordExecutionTime("user.self.pic.post", end - start);
             return new ResponseEntity<>(PictureResponseBean.createBeanFromPicture(pic), HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
@@ -44,9 +53,14 @@ public class PictureController {
     @GetMapping("/user/self/pic")
     public ResponseEntity<?> getPicture(Authentication authentication) {
         try {
+            long start = System.currentTimeMillis();
+            LOG.info("enter user.self.pic.get");
+            statsDClient.incrementCounter("user.self.pic.get");
             String username = authentication.getName();
             User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User: %s, not found", username)));
             Picture pic = pictureService.get(user);
+            long end = System.currentTimeMillis();
+            statsDClient.recordExecutionTime("user.self.pic.get", end - start);
             return new ResponseEntity<>(PictureResponseBean.createBeanFromPicture(pic), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,9 +72,14 @@ public class PictureController {
     @DeleteMapping("/user/self/pic")
     public ResponseEntity<?> deletePicture(Authentication authentication) {
         try {
+            long start = System.currentTimeMillis();
+            LOG.info("enter user.self.pic.delete");
+            statsDClient.incrementCounter("user.self.pic.delete");
             String username = authentication.getName();
             User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User: %s, not found", username)));
             pictureService.delete(user);
+            long end = System.currentTimeMillis();
+            statsDClient.recordExecutionTime("user.self.pic.delete", end - start);
             return new ResponseEntity<>("", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             e.printStackTrace();

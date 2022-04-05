@@ -44,11 +44,11 @@ jobs:
 #          AWS_ACCESS_KEY_ID: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
 #          AWS_SECRET_ACCESS_KEY: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
 #          PACKER_LOG: 1
-#          WEB_PATH: staging/web_service.jar
+#          WEB_PATH: staging/web_spring.jar
       - name: Build Deployment Artifact
         run: |
           mkdir codedeploy_artifact
-          zip -r web_service.zip staging/web_spring.jar codedeploy/*.sh appspec.yml
+          zip -r web_service.zip staging/web_spring.jar codedeploy/* appspec.yml
           mv web_service.zip codedeploy_artifact/
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1

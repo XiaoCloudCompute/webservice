@@ -4,6 +4,8 @@ os: linux
 files:
   - source: ./staging/web_spring.jar
     destination: /home/ec2-user/
+  - source: ./codedeploy/amazon-cloudwatch-agent.json
+    destination: /opt/
 
 hooks:
   BeforeInstall:
