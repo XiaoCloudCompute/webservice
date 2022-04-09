@@ -38,7 +38,7 @@ public class UserControllerTest {
         load.put("first_name", "huanlin");
         load.put("last_name", "xiao");
 
-        mvc.perform(MockMvcRequestBuilders.post("/v1/user")
+        mvc.perform(MockMvcRequestBuilders.post("/v2/user")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new Gson().toJson(load))
                         .accept(MediaType.APPLICATION_JSON))
@@ -54,7 +54,7 @@ public class UserControllerTest {
         load.put("first_name", "huanlin");
         load.put("last_name", "xiao");
 
-        mvc.perform(MockMvcRequestBuilders.post("/v1/user")
+        mvc.perform(MockMvcRequestBuilders.post("/v2/user")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new Gson().toJson(load))
                         .accept(MediaType.APPLICATION_JSON))
@@ -70,7 +70,7 @@ public class UserControllerTest {
         load.put("first_name", "huanlin");
         load.put("last_name", "xiao");
 
-        mvc.perform(MockMvcRequestBuilders.post("/v1/user")
+        mvc.perform(MockMvcRequestBuilders.post("/v2/user")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new Gson().toJson(load))
                         .accept(MediaType.APPLICATION_JSON))
@@ -80,7 +80,7 @@ public class UserControllerTest {
     @Test
     @Order(4)
     public void getUserNoAuthError() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/v1/user/self")
+        mvc.perform(MockMvcRequestBuilders.get("/v2/user/self")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(401));
     }
@@ -89,7 +89,7 @@ public class UserControllerTest {
     @Order(5)
     @WithUserDetails("derek@gmail.com")
     public void getUserSuccess() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/v1/user/self")
+        mvc.perform(MockMvcRequestBuilders.get("/v2/user/self")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
@@ -97,7 +97,7 @@ public class UserControllerTest {
     @Test
     @Order(6)
     public void updateUserNoAuthError() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.post("/v1/user/self")
+        mvc.perform(MockMvcRequestBuilders.post("/v2/user/self")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(401));
     }
