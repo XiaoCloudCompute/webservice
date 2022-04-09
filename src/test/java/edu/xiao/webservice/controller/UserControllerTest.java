@@ -1,6 +1,7 @@
 package edu.xiao.webservice.controller;
 
 import com.google.gson.Gson;
+import edu.xiao.webservice.model.User;
 import edu.xiao.webservice.repository.UserRepository;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -87,15 +89,6 @@ public class UserControllerTest {
 
     @Test
     @Order(5)
-    @WithUserDetails("derek@gmail.com")
-    public void getUserSuccess() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/v1/user/self")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    @Order(6)
     public void updateUserNoAuthError() throws Exception {
         mvc.perform(MockMvcRequestBuilders.post("/v1/user/self")
                         .accept(MediaType.APPLICATION_JSON))
