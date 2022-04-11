@@ -20,6 +20,9 @@ public class WebServiceUserDetailsService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         edu.xiao.webservice.model.User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User: %s, not found", username)));
+        if (!user.isVerified()) {
+            throw new UsernameNotFoundException("User is not verified");
+        }
         return new User(user.getUsername(), user.getPassword(), new ArrayList<>());
     }
 }

@@ -56,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // Our public endpoints
                 .antMatchers("/healthz").permitAll()
                 .antMatchers("/v1/user").permitAll()
+                .antMatchers("/v1/verifyUserEmail").permitAll()
                 .antMatchers("/authenticated").permitAll()
                 // Our private endpoints
                 .anyRequest().authenticated();

@@ -26,6 +26,7 @@ public class User {
     private String lastName;
     private Date accountCreated;
     private Date accountUpdated;
+    private boolean verified = false;
 
     public UUID getId() {
         return id;
@@ -84,6 +85,14 @@ public class User {
 
     public void setAccountUpdated(Date accountUpdated) {
         this.accountUpdated = accountUpdated;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 
     @PrePersist
